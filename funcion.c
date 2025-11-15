@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<string.h>
+#include <math.h>
 #include"funcion.h"
 int leeropcionvalida (int min, int max) {
     int numero;
@@ -140,8 +141,8 @@ void hacerpedidos (char nombres [][50], int recursos [][5], int inventario[5], f
             inventario[r]-=recursos[encontrado][r]*cantidad;
         }  
     }    
-    float horas = tiempo[encontrado]*cantidad;
-    float diasnecesarios=horas/24;
+    float minutos = tiempo[encontrado]*cantidad;
+    float diasnecesarios=(int)ceil(minutos/1440); // redondea el resultado 
 
     if (diasnecesarios>dias)
     {
@@ -150,7 +151,7 @@ void hacerpedidos (char nombres [][50], int recursos [][5], int inventario[5], f
     }
     
     printf("Pedido registrado\n");
-    printf("Tiempo total: %.2f minutos (%.2f dias)\n", horas, diasnecesarios);
+    printf("Tiempo total: %.2f minutos (%.2f dias)\n", minutos, diasnecesarios);
 }
 
 
