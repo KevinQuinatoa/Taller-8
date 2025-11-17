@@ -213,7 +213,7 @@ int editarproducto(char nombres[][50], float tiempo[], int recursos[][5], int *c
 
                 for (int i = 0; i < 5; i++) {
                     printf("%s: ", nombrerecursos[i]);
-                    recursos[pos][i]=leeropcionvalida(1, 999);
+                    recursos[pos][i]=leeropcionvalida(0, 999);
                 }
 
                 
@@ -230,7 +230,7 @@ int editarproducto(char nombres[][50], float tiempo[], int recursos[][5], int *c
 
                 for (int i = 0; i < 5; i++) {
                     printf("%s: ", nombrerecursos[i]);
-                    recursos[pos][i]=leeropcionvalida(1, 999);
+                    recursos[pos][i]=leeropcionvalida(0, 999);
                 }
 
             printf("Producto actualizado completamente.\n");
@@ -330,7 +330,7 @@ void Agregarproducto(char nombres[][50], int recursos [][5], float tiempo[], int
     for (int i = 0; i < 5; i++)
     {
         printf("%s: ", nombrerecursos[i]);
-        recursos[*cantProductos][i]= leeropcionvalida(1, 999);
+        recursos[*cantProductos][i]= leeropcionvalida(0, 999);
     }
     
     (*cantProductos)++;
@@ -345,7 +345,7 @@ void agregarstock(int inventario[], char nombrerecursos[][50]){
     for (int i = 0; i < 5; i++)
     {
         printf("%s: ", nombrerecursos[i]);
-        aumentarI=leeropcionvalida(1, 999);
+        aumentarI=leeropcionvalida(0, 999);
         inventario[i]+=aumentarI;
     }
     printf("Stock actuializado correctamente........\n");
