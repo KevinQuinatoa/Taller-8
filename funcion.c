@@ -274,7 +274,7 @@ void buscarProductoManual(char nombres[][50], int recursos[][5], float tiempo[],
     printf("  Chips:     %d\n", recursos[pos][3]);
     printf("  Sensores:  %d\n", recursos[pos][4]);
 
-    printf("Tiempo de fabricacion: %.2f horas\n", tiempo[pos]);
+    printf("Tiempo de fabricacion: %.2f minutos\n", tiempo[pos]);
 }
 
 void eliminarproducto(char nombres[][50], int recursos[][5], float tiempo[], int *cantProductos){
