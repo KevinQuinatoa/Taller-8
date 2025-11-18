@@ -136,10 +136,8 @@ void hacerpedidos (char nombres [][50], int recursos [][5], int inventario[5], f
             printf("Inventario insuficiente, cargar stock\n");
             return;
         }
-        if (inventario[r]>necesario)
-        {
             inventario[r]-=recursos[encontrado][r]*cantidad;
-        }  
+  
     }    
     float minutos = tiempo[encontrado]*cantidad;
     float diasnecesarios=(int)ceil(minutos/1440); // redondea el resultado 
