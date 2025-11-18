@@ -341,6 +341,7 @@ void Agregarproducto(char nombres[][50], int recursos [][5], float tiempo[], int
 
 void agregarstock(int inventario[], char nombrerecursos[][50]){
     int aumentarI;
+    mostrarstock(inventario, nombrerecursos);
     printf("Ingrese la cantidad de stock que desea aumentar\n");
     for (int i = 0; i < 5; i++)
     {
