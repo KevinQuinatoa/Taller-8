@@ -109,7 +109,7 @@ float totalTiempo = 0;
 tablaproductos(nombres, recursos, tiempo, &cantProductos);
 mostrarstock(inventario, nombrerecursos);
 
-printf("\n¿Cuántos productos diferentes desea ordenar? ");
+printf("\nCuantos productos diferentes desea ordenar? ");
 numProductos = leeropcionvalida(1, cantProductos);
 
 // Leer cada producto
@@ -142,13 +142,27 @@ for (int i = 0; i < numProductos; i++) {
     totalTiempo += tiempo[indices[i]] * cantidades[i];
 }
 
-// Verificar inventario
+// Verificar inventario con detalle
+int hayFaltantes = 0;
+
+printf("\n--- Verificando inventario requerido ---\n");
+
 for (int r = 0; r < 5; r++) {
-    if (totalRecursos[r] > inventario[r]) {
-        printf("\n No hay inventario suficiente para completar el pedido.\n");
-        return;
-    }
+if (totalRecursos[r] > inventario[r]) {
+int falta = totalRecursos[r] - inventario[r];
+
+    printf(" Recurso insuficiente: %s — faltan %d unidades\n",
+           nombrerecursos[r], falta);
+
+    hayFaltantes = 1;
 }
+}
+
+if (hayFaltantes) {
+printf("\nNo se puede completar el pedido hasta reponer inventario.\n");
+return;
+}
+
 
 // Descontar inventario
 for (int r = 0; r < 5; r++) {
