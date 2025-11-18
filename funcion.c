@@ -97,59 +97,77 @@ void tablaproductos(char nombres[][50], int recursos[][5], float tiempo[], int *
     
 }
 
-void hacerpedidos (char nombres [][50], int recursos [][5], int inventario[5], float tiempo[], int cantProductos, char nombrerecursos[][50]){
+void hacerpedidos(char nombres[][50], int recursos[][5], int inventario[5],
+float tiempo[], int cantProductos, char nombrerecursos[][50])
+{
+int numProductos;
+int cantidades[10];
+int indices[10];
+int totalRecursos[5] = {0};
+float totalTiempo = 0;
 
-    char buscar [50];
-    int encontrado= -1;
-    int dias, cantidad;
+tablaproductos(nombres, recursos, tiempo, &cantProductos);
+mostrarstock(inventario, nombrerecursos);
 
-    tablaproductos(nombres, recursos, tiempo, &cantProductos);
-    mostrarstock(inventario, nombrerecursos);
+printf("\n¿Cuántos productos diferentes desea ordenar? ");
+numProductos = leeropcionvalida(1, cantProductos);
 
-    printf("Ingrese el nombre del producto a elegir: ");
-    fgets(buscar, 50, stdin);
-    quitarsaltodelinea (buscar);
+// Leer cada producto
+for (int i = 0; i < numProductos; i++) {
+    char nombreBuscado[50];
+    printf("\nProducto #%d\n", i + 1);
 
-    for (int i = 0; i < cantProductos; i++)
-    {
-        if (strcmp(buscar, nombres[i]) ==0 ){
-            encontrado=i;
-            break;
-        }
-    }
-    if (encontrado == -1){
-        printf("Producto no encontrado\n");
+    printf("Ingrese el nombre del producto: ");
+    fgets(nombreBuscado, 50, stdin);
+    quitarsaltodelinea(nombreBuscado);
+
+    int pos = buscarProducto(nombres, cantProductos, nombreBuscado);
+
+    if (pos == -1) {
+        printf("Producto no encontrado. Cancelando pedido.\n");
         return;
     }
 
-    printf("Ingrese la cantidad que desea ordenar: ");
-    cantidad=leeropcionvalida(1, 999);
-    printf("Ingrese el plazo de dias para la entrega: ");
-    dias=leeropcionvalida(1,999);
-    
+    indices[i] = pos;
 
-    for (int r = 0; r < 5; r++)
-    {
-        int necesario = recursos[encontrado][r]*cantidad;
-        if (necesario>inventario[r])
-        {
-            printf("Inventario insuficiente, cargar stock\n");
-            return;
-        }
-            inventario[r]-=recursos[encontrado][r]*cantidad;
-  
-    }    
-    float minutos = tiempo[encontrado]*cantidad;
-    float diasnecesarios=(int)ceil(minutos/1440); // redondea el resultado 
+    printf("Ingrese la cantidad de este producto: ");
+    cantidades[i] = leeropcionvalida(1, 999);
+}
 
-    if (diasnecesarios>dias)
-    {
-        printf("No se puede realizar el pedido en el tiempo colocado\n");
+// Calcular recursos totales necesarios
+for (int i = 0; i < numProductos; i++) {
+    for (int r = 0; r < 5; r++) {
+        totalRecursos[r] += recursos[indices[i]][r] * cantidades[i];
+    }
+    totalTiempo += tiempo[indices[i]] * cantidades[i];
+}
+
+// Verificar inventario
+for (int r = 0; r < 5; r++) {
+    if (totalRecursos[r] > inventario[r]) {
+        printf("\n No hay inventario suficiente para completar el pedido.\n");
         return;
     }
-    
-    printf("Pedido registrado\n");
-    printf("Tiempo total: %.2f minutos (%.2f dias)\n", minutos, diasnecesarios);
+}
+
+// Descontar inventario
+for (int r = 0; r < 5; r++) {
+    inventario[r] -= totalRecursos[r];
+}
+
+// Calcular días necesarios
+float diasNecesarios = ceil(totalTiempo / 1440.0);
+
+printf("\nIngrese el plazo de entrega en días: ");
+int dias = leeropcionvalida(1, 999);
+
+if (diasNecesarios > dias) {
+    printf("\n No se puede cumplir el pedido en %d días.\n", dias);
+    return;
+}
+
+printf("\n Pedido registrado exitosamente.\n");
+printf("Tiempo total: %.2f minutos (%.2f días)\n", totalTiempo, diasNecesarios);
 }
 
 
