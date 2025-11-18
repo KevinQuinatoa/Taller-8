@@ -151,7 +151,7 @@ for (int r = 0; r < 5; r++) {
 if (totalRecursos[r] > inventario[r]) {
 int falta = totalRecursos[r] - inventario[r];
 
-    printf(" Recurso insuficiente: %s — faltan %d unidades\n",
+    printf(" Recurso insuficiente: %s faltan %d unidades\n",
            nombrerecursos[r], falta);
 
     hayFaltantes = 1;
@@ -176,7 +176,7 @@ printf("\nIngrese el plazo de entrega en días: ");
 int dias = leeropcionvalida(1, 999);
 
 if (diasNecesarios > dias) {
-    printf("\n No se puede cumplir el pedido en %d días.\n", dias);
+    printf("\n No se puede cumplir el pedido en %d dias.\n", dias);
     return;
 }
 
